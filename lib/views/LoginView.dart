@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:keepnotebook/constants/routes.dart';
 import '../firebase_options.dart';
+import 'dart:developer' as devtools show log;
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -35,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.yellow,
       ),
       body: FutureBuilder(
         future:  Firebase.initializeApp(
@@ -74,7 +76,13 @@ class _LoginViewState extends State<LoginView> {
                             email: email,
                             password: password
                         );
+                        // devtools.log(userCredential.toString());
                         print(userCredential);
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            notesRoute,
+                            (_) => false,
+                        );
+
                       } on FirebaseAuthException catch (e){
                         // print(e.code);
                         if(e.code == 'user-not-found'){
@@ -91,6 +99,15 @@ class _LoginViewState extends State<LoginView> {
                     },
                     child: const Text('Login'),
                   ),
+                  TextButton(
+                      onPressed: (){
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            registerRoute,
+                            (route) => false,
+                        );
+                      },
+                      child: const Text('Not Registered yet ? Register here!')
+                  )
                 ],
               );
             default:

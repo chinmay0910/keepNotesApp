@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:keepnotebook/constants/routes.dart';
 
 import '../firebase_options.dart';
 
@@ -36,7 +37,7 @@ class _RegistrationViewState extends State<RegistrationView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Register'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.yellow,
       ),
       body: FutureBuilder(
         future:  Firebase.initializeApp(
@@ -91,6 +92,15 @@ class _RegistrationViewState extends State<RegistrationView> {
                     },
                     child: const Text('Register'),
                   ),
+                  TextButton(
+                      onPressed: (){
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            loginRoute,
+                            (route)=>false,
+                        );
+                      },
+                      child: Text('Already Registered ? Login here !')
+                  )
                 ],
               );
             default:
