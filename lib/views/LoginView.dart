@@ -5,6 +5,8 @@ import 'package:keepnotebook/constants/routes.dart';
 import '../firebase_options.dart';
 import 'dart:developer' as devtools show log;
 
+import '../utilities/show_error_dialog.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -84,16 +86,15 @@ class _LoginViewState extends State<LoginView> {
                         );
 
                       } on FirebaseAuthException catch (e){
-                        // print(e.code);
                         if(e.code == 'user-not-found'){
-                          print('User not found');
+                          showErrorDialog(context, 'User not found');
                         } else if(e.code == 'invalid-credential'){
-                          print('Invalid Credentials');
+                          showErrorDialog(context, 'Invalid Credentials');
                         } else{
-                          print(e.code);
+                          showErrorDialog(context, 'Error: ${e.code}');
                         }
                       } catch (e) {
-                        print(e);
+                        showErrorDialog(context, e.toString());
                       }
 
                     },
